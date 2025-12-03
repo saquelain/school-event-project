@@ -9,7 +9,7 @@ const ImageModal = ({ image, onClose }) => {
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <button className="modal-close" onClick={onClose}>×</button>
         <img 
-          src={`http://localhost:1337${image.url}`}
+          src={`${process.env.REACT_APP_API_URL}${image.url}`}
           alt={image.name}
           className="modal-image"
         />

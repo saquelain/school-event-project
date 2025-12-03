@@ -14,7 +14,7 @@ const EventCard = ({ event, onImageClick }) => {
     <div className="event-card" onClick={() => onImageClick(mainImage)}>
       {mainImage && (
         <img 
-          src={`http://localhost:1337${mainImage.url}`}
+          src={`${process.env.REACT_APP_API_URL}${mainImage.url}`}
           alt={title}
           className="event-image"
         />
