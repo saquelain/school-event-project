@@ -1,23 +1,53 @@
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
 import './App.css';
+import Hero from './components/Hero';
+import FilterTabs from './components/FilterTabs';
+import EventGrid from './components/EventGrid';
+import ImageModal from './components/ImageModal';
+import { fetchEvents } from './services/api';
 
 function App() {
+  const [events, setEvents] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    loadEvents();
+  }, [selectedCategory]);
+
+  const loadEvents = async () => {
+    setLoading(true);
+    try {
+      const data = await fetchEvents(selectedCategory);
+      console.log('Fetched events:', data); // Add this line
+      setEvents(data);
+    } catch (error) {
+      console.error('Failed to load events:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Hero />
+      <FilterTabs 
+        selectedCategory={selectedCategory}
+        onCategoryChange={setSelectedCategory}
+      />
+      {loading ? (
+        <div className="loading">Loading events...</div>
+      ) : (
+        <EventGrid 
+          events={events}
+          onImageClick={setSelectedImage}
+        />
+      )}
+      <ImageModal 
+        image={selectedImage}
+        onClose={() => setSelectedImage(null)}
+      />
     </div>
   );
 }
