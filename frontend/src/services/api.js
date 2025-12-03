@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:1337/api';
+const API_BASE_URL = `${process.env.REACT_APP_API_URL}/api` || 'http://localhost:1337/api';
 // const API_BASE_URL = 'http://localhost:1337/api';
 
 export const fetchEvents = async (category = null) => {
