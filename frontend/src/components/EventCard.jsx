@@ -4,6 +4,7 @@ import './EventCard.css';
 const EventCard = ({ event, onImageClick }) => {
   const { title, date, images } = event;
   const mainImage = images?.[0];
+  console.log('Image URL:', mainImage.url);
   
   const formatDate = (dateString) => {
     const options = { day: '2-digit', month: 'short', year: 'numeric' };
